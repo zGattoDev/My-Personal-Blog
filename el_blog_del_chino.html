@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Blog Del Chino - Gaming &amp; Tech News</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="el_blog_del_chino.css">
+    <script src="color-mode.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html.barrel-roll {
+            transform-origin: 50vw 50vh;
+            animation: barrel-roll 1s cubic-bezier(0.2, 0.7, 0.3, 1);
+        }
+
+        @keyframes barrel-roll {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(.86); }
+            50% { transform: rotate(180deg) scale(.72); }
+            75% { transform: rotate(270deg) scale(.86); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html.barrel-roll { animation-duration: .01ms; }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandGreen: '#0a8754',
+                        brandDarkGreen: '#07633d',
+                        brandLightGreen: '#10b981',
+                        brandDark: '#121212',
+                        sidebarBg: '#1e1e1e'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="bg-white border-b border-gray-200">
+        
+        <div class="logo-container border-b border-gray-100">
+           
+            <a id="barrel-roll-title" href="#" class="inline-block text-center group cursor-pointer">
+                <div class="header-logo-img flex flex-col items-center justify-center p-2">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-gray-900 leading-none mb-1">
+                        El Blog<br><span class="text-gray-900">Del Chino</span>
+                    </h1>
+                </div>
+            </a>
+        </div>
+
+
+
+       
+        <nav class="bg-brandGreen text-white shadow-md sticky top-0 z-40">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6">
+                <div class="flex items-center  h-14">
+                    
+               
+                    <div class="flex items-center">
+                        <button id="search-trigger-btn" onclick="toggleInlineSearch()" class="p-2 rounded-lg hover:bg-brandDarkGreen transition-colors flex items-center gap-2 focus:outline-none" title="Buscar">
+                            <i class="fas fa-search text-lg"></i>
+                            <span id="search-text-label" class="hidden sm:inline text-sm font-medium">Buscar</span>
+                        </button>
+
+                      
+                        <div id="inline-search-box" class="search-expand-container">
+                            <div class="relative flex items-center ml-2">
+                                <input 
+                                    type="text" 
+                                    id="inline-search-input" 
+                                    placeholder="Buscar noticia o tema..." 
+                                    class="py-1.5 pl-3 pr-8 rounded-full bg-emerald-950/70 text-white placeholder-emerald-200/70 border border-emerald-400/40 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-white w-full shadow-inner">
+                           
+                                <button onclick="toggleInlineSearch()" class="absolute right-2 text-emerald-200 hover:text-white text-xs p-1 focus:outline-none" title="Cerrar búsqueda">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                  
+                    <div class="hidden md:flex items-center space-x-6 font-medium text-sm lg:text-base md:ml-auto">
+                        <a href="#inicio" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Inicio</a>
+                        <a href="#noticias" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Noticias</a>
+                        <a href="#reviews" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Reviews</a>
+                        <a href="#videojuegos" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Videojuegos</a>
+                        <a href="musica_blog.html" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Musica</a>
+                        <a href="contactos_blog.html" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Contacto</a>
+                    </div>
+
+                    <div class="ml-auto md:ml-3 flex items-center gap-1">
+                        <button id="color-mode-toggle" onclick="toggleColorMode()" class="p-2 rounded hover:bg-brandDarkGreen transition-colors focus:outline-none" aria-label="Cambiar a modo oscuro" title="Cambiar a modo oscuro" aria-pressed="false">
+                            <i class="fas fa-moon" aria-hidden="true"></i>
+                        </button>
+                        <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded hover:bg-brandDarkGreen text-xl focus:outline-none" title="Abrir menú">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div id="mobile-menu" class="hidden md:hidden bg-brandDarkGreen border-t border-emerald-700 px-4 py-3 space-y-2 text-sm font-medium">
+                <a href="#inicio" onclick="toggleMobileMenu()" class="block py-1 hover:text-emerald-200">Inicio</a>
+                <a href="#noticias" onclick="toggleMobileMenu()" class="block py-1 hover:text-emerald-200">Noticias</a>
+                <a href="#reviews" onclick="toggleMobileMenu()" class="block py-1 hover:text-emerald-200">Reviews</a>
+                <a href="#videojuegos" onclick="toggleMobileMenu()" class="block py-1 hover:text-emerald-200">Videojuegos</a>
+                <a href="musica_blog.html" onclick="toggleMobileMenu()" class="block py-1 hover:text-emerald-200">Musica</a>
+                <a href="contactos_blog.html" onclick="toggleMobileMenu()" class="block py-1 hover:text-emerald-200">Contacto</a>
+            </div>
+        </nav>
+    </header>
+
+
+
+
+    <main id="inicio" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-grow w-full">
+        
+        <section class="mb-10 search-targetable">
+          
+            <div class="text-center mb-6">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 title-underline">
+                    Novedades
+                </h2>
+                <p class="mt-4 text-gray-700 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
+                    El nuevo arcade de aviación de Bandai Namco Aces es emocional, humano e increíblemente divertido. Ojalá venda muy bien.
+                </p>
+            </div>
+
+
+
+
+            <hr class="border-gray-300 my-6" />
+
+
+
+           
+            <div class="relative bg-black rounded-lg overflow-hidden shadow-xl max-w-4xl mx-auto group">
+              
+                <div id="slider-container" class="relative w-full h-[260px] sm:h-[380px] md:h-[440px]">
+                    
+                  
+                    <div class="slide active transition-opacity duration-700 opacity-100 absolute inset-0">
+                        <a href="javascript:void(0)" onclick="openNewsModal('Ace Combat 8: Wings of Theve', 'El nuevo arcade de aviación de Bandai Namco Aces regresa con una fuerza impresionante en el icónico universo de Strangereal. Disfruta de la acción aérea más realista e intensa.', 'https://images.unsplash.com/photo-1519074069444-1ba4eae16748?auto=format&fit=crop&w=1200&q=80')" class="block w-full h-full relative">
+                            <img src="imgblog/imgsliders/acecombat8banner.avif" alt="Ace Combat 8" class="w-full h-full object-cover">
+                           
+                            <div class="absolute bottom-10 left-4 sm:left-6 max-w-[90%] sm:max-w-[70%] bg-brandGreen/40 backdrop-blur-sm text-white p-3 sm:p-4 rounded shadow-lg">
+                                <h3 class="text-lg sm:text-2xl font-bold leading-snug hover:underline">
+                                    Ace Combat 8: Wings of Theve, vuelve el rey de los cielos
+                                </h3>
+                            </div>
+                        </a>
+                    </div>
+
+                  
+                    <div class="slide transition-opacity duration-700 opacity-0 absolute inset-0 pointer-events-none">
+                        <a href="javascript:void(0)" onclick="openNewsModal('GTA VI: Un nuevo estándar', 'Las primeras impresiones de GTA 6 ponen por las nubes su mundo abierto, su interactividad y el apartado técnico que marca una nueva era en el gaming.', 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=1200&q=80')" class="block w-full h-full relative">
+                            <img src="imgblog/imgsliders/gta6banner.avif" alt="GTA VI" class="w-full h-full object-cover">
+                            <div class="absolute bottom-10 left-4 sm:left-6 max-w-[90%] sm:max-w-[70%] bg-violet-900/40 backdrop-blur-sm text-white p-3 sm:p-4 rounded shadow-lg">
+                                <h3 class="text-lg sm:text-2xl font-bold leading-snug hover:underline">
+                                    GTA VI: El mundo abierto más detallado jamás creado
+                                </h3>
+                            </div>
+                        </a>
+                    </div>
+
+                 
+                    <div class="slide transition-opacity duration-700 opacity-0 absolute inset-0 pointer-events-none">
+                        <a href="javascript:void(0)" onclick="openNewsModal('Monster Hunter Wilds', 'Capcom sabe que Monster Hunter Wilds dejó lecciones importantes y su próxima gran expansión quiere demostrar que tomó nota.', 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80')" class="block w-full h-full relative">
+                            <img src="imgblog/imgsliders/monsterhunterbanner.avif" alt="Monster Hunter" class="w-full h-full object-cover">
+                            <div class="absolute bottom-10 left-4 sm:left-6 max-w-[90%] sm:max-w-[70%] bg-amber-900/40 backdrop-blur-sm text-white p-3 sm:p-4 rounded shadow-lg">
+                                <h3 class="text-lg sm:text-2xl font-bold leading-snug hover:underline">
+                                    Monster Hunter Wilds: Nuevas cazas y expansión confirmada
+                                </h3>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+            
+                <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-brandGreen text-white px-3 py-2 rounded-md transition-all text-xl font-black z-20 focus:outline-none">
+                    &lt;&lt;
+                </button>
+                <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-brandGreen text-white px-3 py-2 rounded-md transition-all text-xl font-black z-20 focus:outline-none">
+                    &gt;&gt;
+                </button>
+
+             
+                <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center space-x-2 z-20">
+                    <button onclick="goToSlide(0)" class="dot w-3 h-3 rounded-full bg-brandGreen transition-all"></button>
+                    <button onclick="goToSlide(1)" class="dot w-3 h-3 rounded-full bg-white/70 hover:bg-white transition-all"></button>
+                    <button onclick="goToSlide(2)" class="dot w-3 h-3 rounded-full bg-white/70 hover:bg-white transition-all"></button>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-300 my-8" />
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+         
+            <article class="lg:contents space-y-8">
+                
+            
+                <div id="noticias" class="space-y-4 search-targetable lg:col-span-8">
+                    <div>
+                        <span class="badge-green text-lg sm:text-xl mb-3">
+                            Una de las grandes sorpresas del 2026
+                        </span>
+                    </div>
+
+                    <p class="text-gray-800 text-base sm:text-lg leading-relaxed pt-2">
+                        La franquicia de aviación más emblemática del videojuego regresa con <strong>Ace Combat 8: Wings of Theve</strong>, trasladándonos a julio de 2029 en el icónico universo de Strangereal. La trama arranca tras una invasión relámpago de la República de Sotoa sobre la Federación de Centro Usea (FCU). Como piloto superviviente rescatado a bordo del desgastado portaaviones <em>Endurance</em>, te integras al Escuadrón Joker para liderar la contraofensiva de la resistencia.
+                    </p>
+
+                   
+                    <div class="overflow-hidden my-4">
+                        <img src="imgblog/bodyimg/ace8gameplay1body.png" alt="Ace Combat Dogfight Gameplay" class="w-full h-auto object-cover body-image-hover">
+                    </div>
+                </div>
+
+               
+                <div id="reviews" class="space-y-4 pt-2 search-targetable lg:col-span-12">
+                    <div>
+                        <span class="badge-green text-lg sm:text-xl">
+                            Puntos clave de jugabilidad
+                        </span>
+                    </div>
+
+                    <div class="space-y-4 pt-2">
+                        <h4 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                            <span class="inline-block w-2 h-2 bg-brandGreen rounded-full"></span>
+                            Motor climático "Cloudly":
+                        </h4>
+                        <p class="text-gray-800 text-base leading-relaxed pl-4">
+                            Las nubes han dejado de ser meros elementos estéticos. El nuevo motor de renderizado simula condiciones dinámicas donde las estelas de condensación y el humo de los motores enemigos sirven para rastrear objetivos o maniobrar tácticamente en mitad del dogfight.
+                        </p>
+
+                        <h4 class="text-lg font-bold text-gray-900 flex items-center gap-2 pt-2">
+                            <span class="inline-block w-2 h-2 bg-brandGreen rounded-full"></span>
+                            Órdenes de escuadrón:
+                        </h4>
+                        <p class="text-gray-800 text-base leading-relaxed pl-4">
+                            Regresa el control directo sobre los compañeros de ala. Se pueden coordinar ataques simultáneos contra objetivos terrestres, navales o cazas de intercepción según la prioridad de la misión.
+                        </p>
+                    </div>
+
+                  
+                    <div class="overflow-hidden my-4">
+                        <img src="imgblog/bodyimg/ace8gameplay2body.png" alt="Ace Combat Cloudly Engine" class="w-full h-auto object-cover body-image-hover">
+                    </div>
+                </div>
+
+              
+                <div id="videojuegos" class="space-y-4 pt-2 search-targetable lg:col-span-12">
+                    <div>
+                        <span class="badge-green text-lg sm:text-xl">
+                            Veredicto Final
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start pt-2">
+                        <div class="md:col-span-7 space-y-4">
+                            <p class="text-gray-800 text-base leading-relaxed">
+                                <strong>Ace Combat 8: Wings of Theve</strong> refina la fórmula arcade de la franquicia con un salto visual impresionante en el comportamiento del cielo y una narrativa mucho más personal. Es una cita obligada tanto para los fans acérrimos de la saga como para quienes buscan una experiencia de acción aérea vibrante y directa.
+                            </p>
+
+                            <div class="pt-2">
+                                <h5 class="font-bold text-gray-900 text-base mb-2">Lo Mejor</h5>
+                                <ul class="list-disc list-inside text-gray-700 text-sm space-y-1.5 pl-2">
+                                    <li>El sistema climático dinámico y su impacto real en el combate.</li>
+                                    <li>La escala y espectacularidad de las batallas contra superarmas.</li>
+                                    <li>La inmersión de las secuencias en primera persona entre misiones.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    
+                        <div class="md:col-span-5 flex flex-col items-center justify-center">
+                            <div class="w-full max-w-[240px] overflow-hidden rounded-lg">
+                                <img src="imgblog/bodyimg/ace8poster1.jpg" alt="Ace Combat 8 Poster" class="w-full h-auto object-cover body-image-hover">
+                            </div>
+                            
+                      
+                            <div class="mt-4 bg-brandGreen text-white font-extrabold px-6 py-2 rounded-md shadow-md text-base sm:text-lg">
+                                Puntuación: 9 / 10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
+
+            <aside class="lg:col-span-4 lg:col-start-9 lg:row-start-1 w-full">
+                <div class="bg-sidebarBg text-white rounded-3xl p-5 shadow-2xl border border-gray-800 sticky top-20">
+                    
+                    <h3 class="text-xl font-bold tracking-wide text-white mb-4 border-b border-gray-700 pb-3 flex items-center justify-between">
+                        <span>Ultimas Noticias:</span>
+                        <i class="fas fa-fire text-emerald-400 text-sm"></i>
+                    </h3>
+
+                 
+                    <div class="space-y-4 max-h-[820px] overflow-y-auto pr-1 custom-scrollbar">
+                        
+                     
+                        <div class="sidebar-item search-targetable flex items-center gap-3 p-2 rounded-xl hover:bg-gray-800/80 transition-colors border border-transparent hover:border-gray-700">
+                            <div class="w-20 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900 border border-gray-700">
+                                <img src="imgblog/ultimasnoticiasimg/ultgta6.jpg" alt="GTA VI" class="w-full h-full object-cover sidebar-thumb-hover">
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-200 font-medium line-clamp-3">
+                                Las primeras impresiones de GTA 6 ponen por las nubes su mundo abierto, su interactividad y el apartado técnico: "es tan espectacular que marca un nuevo estándar"
+                            </p>
+                        </div>
+
+               
+                        <div class="sidebar-item search-targetable flex items-center gap-3 p-2 rounded-xl hover:bg-gray-800/80 transition-colors border border-transparent hover:border-gray-700">
+                            <div class="w-20 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900 border border-gray-700">
+                                <img src="imgblog/ultimasnoticiasimg/ultsteamframe.avif" alt="Steam Frame VR" class="w-full h-full object-cover sidebar-thumb-hover">
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-200 font-medium line-clamp-3">
+                                Valve lanza el Steam Frame, buen visor VR para juegos a precio elevado
+                            </p>
+                        </div>
+
+                 
+                        <div class="sidebar-item search-targetable flex items-center gap-3 p-2 rounded-xl hover:bg-gray-800/80 transition-colors border border-transparent hover:border-gray-700">
+                            <div class="w-20 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900 border border-gray-700">
+                                <img src="imgblog/ultimasnoticiasimg/ultbreakingbenjamin.webp" alt="Breaking Benjamin" class="w-full h-full object-cover sidebar-thumb-hover">
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-200 font-medium line-clamp-3">
+                                El líder de Breaking Benjamin está envuelto en una disputa sobre mods de Fallout 4 y detuvo un concierto para despotricar al respecto.
+                            </p>
+                        </div>
+
+                    
+                        <div class="sidebar-item search-targetable flex items-center gap-3 p-2 rounded-xl hover:bg-gray-800/80 transition-colors border border-transparent hover:border-gray-700">
+                            <div class="w-20 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900 border border-gray-700">
+                                <img src="imgblog/ultimasnoticiasimg/ultyanineko.avif" alt="Chainsmoker Cat Anime" class="w-full h-full object-cover sidebar-thumb-hover">
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-200 font-medium line-clamp-3">
+                                El anime de Netflix con humor absurdo, drama emocional y una chica-gato adicta al cigarro: así es "Chainsmoker Cat"
+                            </p>
+                        </div>
+
+                      
+                        <div class="sidebar-item search-targetable flex items-center gap-3 p-2 rounded-xl hover:bg-gray-800/80 transition-colors border border-transparent hover:border-gray-700">
+                            <div class="w-20 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900 border border-gray-700">
+                                <img src="imgblog/ultimasnoticiasimg/ultjojos.avif" alt="Steel Ball Run" class="w-full h-full object-cover sidebar-thumb-hover">
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-200 font-medium line-clamp-3">
+                                Así es "SPIN", el tema de apertura de "Steel Ball Run JoJo's Bizarre Adventure" de Netflix
+                            </p>
+                        </div>
+
+                     
+                        <div class="sidebar-item search-targetable flex items-center gap-3 p-2 rounded-xl hover:bg-gray-800/80 transition-colors border border-transparent hover:border-gray-700">
+                            <div class="w-20 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900 border border-gray-700">
+                                <img src="imgblog/ultimasnoticiasimg/ultrobbiewillians.webp" alt="Robbie Williams" class="w-full h-full object-cover sidebar-thumb-hover">
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-200 font-medium line-clamp-3">
+                                Equipo de Robbie Williams TRANQUILIZA a los fans tras la cancelación de concierto en Arena 1: "Vendrá a cantar esta noche"
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+
+        <hr class="border-gray-300 my-12" />
+
+        <section class="mb-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 title-underline">
+                    Top Categorias
+                </h2>
+                <p class="mt-3 text-gray-600 text-sm sm:text-base">
+                    Aquí se encuentra la colección de los post mas vistos de la semana
+                </p>
+            </div>
+
+           
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+           
+                <article class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-md group hover:shadow-xl transition-shadow duration-300 search-targetable">
+                    <a href="noticias.html?juego=monster-hunter" class="block">
+                        <div class="relative h-48 sm:h-52 overflow-hidden bg-gray-900">
+                            <img src="imgblog/topcategoriasimg/topmhw.webp" alt="Monster Hunter Wilds" class="w-full h-full object-cover hover-card-img">
+                            <span class="absolute bottom-3 left-3 bg-amber-400/80 text-white text-xs font-bold px-2.5 py-1 rounded">
+                                Monster Hunter Wilds
+                            </span>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-800 text-sm sm:text-base font-semibold group-hover:text-brandGreen transition-colors leading-snug">
+                                Capcom sabe que Monster Hunter Wilds dejó lecciones importantes y su próxima gran expansión quiere demostrar que tomó nota
+                            </p>
+                        </div>
+                    </a>
+                </article>
+
+              
+                <article class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-md group hover:shadow-xl transition-shadow duration-300 search-targetable">
+                    <a href="noticias.html?juego=starcraft" class="block">
+                        <div class="relative h-48 sm:h-52 overflow-hidden bg-gray-900">
+                            <img src="imgblog/topcategoriasimg/topstarcraft.webp" alt="StarCraft Shooter" class="w-full h-full object-cover hover-card-img">
+                            <span class="absolute bottom-3 left-3 bg-blue-600/70 text-white text-xs font-bold px-2.5 py-1 rounded">
+                                StarCraft
+                            </span>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-800 text-sm sm:text-base font-semibold group-hover:text-brandGreen transition-colors leading-snug">
+                                Se anuncia un nuevo juego de StarCraft, pero es un sombrío "shooter" de mundo abierto y no llegará hasta 2030.
+                            </p>
+                        </div>
+                    </a>
+                </article>
+
+           
+                <article class="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-md group hover:shadow-xl transition-shadow duration-300 search-targetable">
+                    <a href="noticias.html?juego=witcher3" class="block">
+                        <div class="relative h-48 sm:h-52 overflow-hidden bg-gray-900">
+                            <img src="imgblog/topcategoriasimg/topthewitcher3.jpg" alt="The Witcher 3" class="w-full h-full object-cover hover-card-img">
+                            <span class="absolute bottom-3 left-3 bg-red-700/70 text-white text-xs font-bold px-2.5 py-1 rounded">
+                                The Witcher 3
+                            </span>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-800 text-sm sm:text-base font-semibold group-hover:text-brandGreen transition-colors leading-snug">
+                                Tenemos las excusas perfectas para volver a The Witcher 3: el DLC Song of The Past y un remaster gratis para quienes ya tengan el juego
+                            </p>
+                        </div>
+                    </a>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="contacto" class="bg-brandDark text-gray-300 border-t-4 border-brandGreen mt-12 py-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                
+             
+                <div>
+                    <h4 class="text-xl font-bold text-white mb-3">El Blog Del Chino</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                        Tu portal de noticias, análisis y reviews sobre el mundo de los videojuegos, cine, tecnología y entretenimiento digital.
+                    </p>
+                    <p class="text-xs text-gray-400">
+                        &copy; 2026 <span class="text-white font-semibold">Ruben Eduardo Ortiz</span>. Todos los derechos reservados.
+                    </p>
+                </div>
+
+            
+                <div>
+                    <h4 class="text-base font-bold text-white mb-3 uppercase tracking-wider">Enlaces Rápidos</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#inicio" class="hover:text-emerald-400 transition-colors"><i class="fas fa-chevron-right text-xs text-brandGreen mr-2"></i>Inicio</a></li>
+                        <li><a href="#noticias" class="hover:text-emerald-400 transition-colors"><i class="fas fa-chevron-right text-xs text-brandGreen mr-2"></i>Noticias Destacadas</a></li>
+                        <li><a href="#reviews" class="hover:text-emerald-400 transition-colors"><i class="fas fa-chevron-right text-xs text-brandGreen mr-2"></i>Reviews de Juegos</a></li>
+                        <li><a href="#videojuegos" class="hover:text-emerald-400 transition-colors"><i class="fas fa-chevron-right text-xs text-brandGreen mr-2"></i>Análisis Técnico</a></li>
+                    </ul>
+                </div>
+
+             
+                <div>
+                    <h4 class="text-base font-bold text-white mb-3 uppercase tracking-wider">Contactos</h4>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brandGreen/20 text-emerald-400 flex items-center justify-center">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Correo Electrónico:</p>
+                                <a href="mailto:srgatomctaco@gmail.com" class="text-gray-200 hover:text-emerald-400 font-medium transition-colors">
+                                    srgatomctaco@gmail.com
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brandGreen/20 text-emerald-400 flex items-center justify-center">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Número de Teléfono:</p>
+                                <a href="" class="text-gray-200 hover:text-emerald-400 font-medium transition-colors">
+                                    936692162
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-t border-gray-800 pt-6 text-center text-xs text-gray-400 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p>Ruben Eduardo Ortiz - El Blog Del Chino</p>
+                <div class="flex space-x-4 text-base">
+                    <a href="https://x.com/SrGatoMcTaco" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.youtube.com/@eduardo81896" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-youtube"></i></a>
+                    <a href="https://discord.gg/S75GKHeaC" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.instagram.com/siirgatto/" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="news-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl transform transition-all">
+            <div class="relative h-64 sm:h-80 bg-black">
+                <video id="modal-video" class="w-full h-full object-contain" controls muted playsinline preload="metadata">
+                    <source src="vidblog/ACE-COMBAT-8-WINGS-OF-THEVE-Launch-Trailer_001_1080p.mp4" type="video/mp4">
+                    Tu navegador no puede reproducir este video.
+                </video>
+                <button onclick="closeNewsModal()" class="absolute top-4 right-4 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center transition-all focus:outline-none">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <span class="badge-green text-xs mb-2">Resumen de la noticia</span>
+                <h3 id="modal-title" class="text-xl sm:text-2xl font-bold text-gray-900 mb-3"></h3>
+                <p id="modal-body" class="text-gray-700 text-sm sm:text-base leading-relaxed mb-6"></p>
+                <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <a id="modal-article-link" href="#" class="hidden items-center justify-center gap-2 bg-brandGreen hover:bg-brandDarkGreen text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors">
+                        Ir a la noticia completa <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <button onclick="closeNewsModal()" class="bg-brandGreen hover:bg-brandDarkGreen text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors">
+                        Cerrar Lectura
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+ 
+        let isSearchOpen = false;
+
+        function toggleInlineSearch() {
+            const searchBox = document.getElementById('inline-search-box');
+            const searchInput = document.getElementById('inline-search-input');
+            const textLabel = document.getElementById('search-text-label');
+
+            isSearchOpen = !isSearchOpen;
+
+            if (isSearchOpen) {
+                searchBox.classList.add('open');
+                if (textLabel) textLabel.classList.add('hidden');
+                setTimeout(() => {
+                    searchInput.focus();
+                }, 350);
+            } else {
+                searchBox.classList.remove('open');
+                if (textLabel) textLabel.classList.remove('hidden');
+                searchInput.value = '';
+            }
+        }
+
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        let autoSlideInterval;
+
+        function showSlide(index) {
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.remove('opacity-0', 'pointer-events-none');
+                    slide.classList.add('opacity-100', 'active');
+                } else {
+                    slide.classList.remove('opacity-100', 'active');
+                    slide.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.remove('bg-white/70');
+                    dot.classList.add('bg-brandGreen');
+                } else {
+                    dot.classList.remove('bg-brandGreen');
+                    dot.classList.add('bg-white/70');
+                }
+            });
+
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+            resetAutoSlide();
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+            resetAutoSlide();
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+            resetAutoSlide();
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+
+        function openNewsModal(title, text) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = text;
+            const modalVideo = document.getElementById('modal-video');
+            const normalizedTitle = title.toLowerCase();
+            const articleSlug = normalizedTitle.includes('gta')
+                ? 'gta6'
+                : normalizedTitle.includes('monster hunter')
+                    ? 'monster-hunter'
+                    : null;
+            const videoSrc = articleSlug === 'gta6'
+                ? 'vidblog/GTA 6 trailer1.mp4'
+                : articleSlug === 'monster-hunter'
+                    ? 'vidblog/Monsterhunter wilds ascendance trailer1.mp4'
+                    : 'vidblog/ACE-COMBAT-8-WINGS-OF-THEVE-Launch-Trailer_001_1080p.mp4';
+            const articleLink = document.getElementById('modal-article-link');
+            if (articleSlug) {
+                articleLink.href = `noticias.html?juego=${articleSlug}`;
+                articleLink.classList.remove('hidden');
+                articleLink.classList.add('inline-flex');
+            } else {
+                articleLink.classList.add('hidden');
+                articleLink.classList.remove('inline-flex');
+                articleLink.removeAttribute('href');
+            }
+            modalVideo.src = videoSrc;
+            modalVideo.load();
+            modalVideo.currentTime = 0;
+            document.getElementById('news-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            modalVideo.play().catch(() => {});
+        }
+
+        function closeNewsModal() {
+            const modalVideo = document.getElementById('modal-video');
+            modalVideo.pause();
+            modalVideo.currentTime = 0;
+            document.getElementById('news-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+  
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        const barrelRollTitle = document.getElementById('barrel-roll-title');
+        let titleClickCount = 0;
+        let titleClickReset;
+
+        barrelRollTitle.addEventListener('click', event => {
+            event.preventDefault();
+            titleClickCount += 1;
+            clearTimeout(titleClickReset);
+
+            if (titleClickCount === 10) {
+                titleClickCount = 0;
+                document.documentElement.classList.remove('barrel-roll');
+                void document.documentElement.offsetWidth;
+                document.documentElement.classList.add('barrel-roll');
+                return;
+            }
+
+            titleClickReset = setTimeout(() => {
+                titleClickCount = 0;
+            }, 3000);
+        });
+
+        document.documentElement.addEventListener('animationend', event => {
+            if (event.animationName === 'barrel-roll') {
+                document.documentElement.classList.remove('barrel-roll');
+            }
+        });
+
+  
+        window.onload = function() {
+            showSlide(0);
+            startAutoSlide();
+        };
+    </script>
+</body>
+</html>

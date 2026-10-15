@@ -1,0 +1,232 @@
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+   
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            background-color: #ffffff;
+        }
+
+        .header-logo-img {
+            max-height: 120px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .header-logo-img:hover {
+            transform: scale(1.02);
+        }
+
+   
+        .search-expand-container {
+            width: min(58vw, 320px);
+            transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+            max-width: 0px;
+            opacity: 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .search-expand-container.open {
+            max-width: 320px;
+            opacity: 1;
+        }
+
+        @media (min-width: 640px) {
+            .search-expand-container {
+                width: 320px;
+            }
+        }
+
+       
+        .hover-card-img {
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.3s ease;
+            overflow: hidden;
+        }
+        .group:hover .hover-card-img {
+            transform: scale(1.08);
+            filter: brightness(1.1);
+        }
+
+        .body-image-hover {
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.3s ease;
+        }
+        .body-image-hover:hover {
+            transform: scale(1.04);
+            filter: brightness(1.1);
+        }
+
+        .sidebar-thumb-hover {
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .sidebar-item:hover .sidebar-thumb-hover {
+            transform: scale(1.1);
+            filter: brightness(1.15);
+        }
+
+       
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #181818;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #0a8754;
+            border-radius: 8px;
+        }
+
+      
+        .badge-green {
+            background-color: #0a8754;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.5rem 1.25rem;
+            display: inline-block;
+            border-radius: 0.25rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #news-modal .badge-green {
+            background-color: #0a8754;
+            color: #ffffff;
+        }
+
+       
+        .title-underline {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background-color: #0a8754;
+            border-radius: 2px;
+        }
+
+        .search-highlight {
+            background-color: #fef08a;
+            color: #000;
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+
+        html.dark-mode body {
+            background-color: #111714;
+            color: #edf4ef;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        html.dark-mode .logo-container,
+        html.dark-mode header.bg-white {
+            background-color: #19211c !important;
+            border-color: #34443a !important;
+        }
+
+        html.dark-mode .bg-white {
+            background-color: #1b241e !important;
+        }
+
+        html.dark-mode .bg-gray-50 {
+            background-color: #171f1a !important;
+        }
+
+        html.dark-mode .bg-gray-100 {
+            background-color: #242e27 !important;
+        }
+
+        html.dark-mode .bg-gray-200 {
+            background-color: #303b33 !important;
+        }
+
+        html.dark-mode .text-gray-900 {
+            color: #f1f6f2 !important;
+        }
+
+        html.dark-mode .text-gray-800 {
+            color: #e0e9e2 !important;
+        }
+
+        html.dark-mode .text-gray-700 {
+            color: #c4d0c7 !important;
+        }
+
+        html.dark-mode .text-gray-600 {
+            color: #afbeb3 !important;
+        }
+
+        html.dark-mode .text-gray-500,
+        html.dark-mode .text-gray-400 {
+            color: #9ba99f !important;
+        }
+
+        html.dark-mode .border-gray-100,
+        html.dark-mode .border-gray-200,
+        html.dark-mode .border-gray-300 {
+            border-color: #34443a !important;
+        }
+
+        html.dark-mode .text-brandGreen,
+        html.dark-mode .hover\:text-brandGreen:hover {
+            color: #c6f277 !important;
+        }
+
+        html.dark-mode .border-brandGreen {
+            border-color: #a9d85b !important;
+        }
+        
+
+        html.dark-mode .badge-green {
+            background-color: #b7e66a;
+            color: #172116;
+        }
+
+        html.dark-mode .title-underline::after {
+            background-color: #b7e66a;
+        }
+
+        html.dark-mode #search-filter-banner {
+            background-color: #173626 !important;
+            border-color: #326b48 !important;
+            color: #e2f7e8 !important;
+        }
+
+        html.dark-mode #search-filter-banner button {
+            background-color: #b7e66a;
+            color: #172116;
+        }
+
+        html.dark-mode #news-modal > div {
+            background-color: #1b241e;
+        }
+
+        html.dark-mode .search-expand-container input {
+            background-color: #10271a;
+            color: #f1f6f2;
+        }
+
+        html.dark-mode #color-mode-toggle {
+            color: #e4f4c7;
+        }
+
+        html.dark-mode #color-mode-toggle:hover {
+            background-color: #265137;
+        }
+
+        html.dark-mode footer .rounded-full {
+            background-color: rgba(183, 230, 106, 0.16) !important;
+            color: #c6f277 !important;
+        }

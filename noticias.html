@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Noticias - El Blog Del Chino</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="el_blog_del_chino.css">
+	<script src="color-mode.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		.news-search-expand {
+			width: min(58vw, 320px);
+			transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+		}
+
+		.news-search-expand.open {
+			max-width: 320px;
+		}
+
+		@media (min-width: 640px) {
+			.news-search-expand {
+				width: 320px;
+			}
+		}
+	</style>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						brandGreen: '#0a8754',
+						brandDarkGreen: '#07633d',
+						brandLightGreen: '#10b981',
+						brandDark: '#121212',
+						sidebarBg: '#1e1e1e'
+					},
+					fontFamily: { sans: ['Inter', 'sans-serif'] }
+				}
+			}
+		};
+	</script>
+</head>
+<body class="min-h-screen flex flex-col">
+	<header class="bg-white border-b border-gray-200">
+		<div class="logo-container border-b border-gray-100">
+			<a href="el_blog_del_chino.html#inicio" class="inline-block text-center group">
+				<div class="header-logo-img flex flex-col items-center justify-center p-2">
+					<h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-gray-900 leading-none mb-1">El Blog<br><span class="text-gray-900">Del Chino</span></h1>
+				</div>
+			</a>
+		</div>
+		<nav class="bg-brandGreen text-white shadow-md sticky top-0 z-40">
+			<div class="max-w-5xl mx-auto px-4 sm:px-6">
+				<div class="flex items-center h-14">
+					<div class="flex items-center">
+						<button id="search-trigger-btn" onclick="toggleInlineSearch()" class="p-2 rounded-lg hover:bg-brandDarkGreen transition-colors flex items-center gap-2 focus:outline-none" title="Buscar">
+							<i class="fas fa-search text-lg"></i><span id="search-text-label" class="hidden sm:inline text-sm font-medium">Buscar</span>
+						</button>
+						<div id="inline-search-box" class="search-expand-container news-search-expand">
+							<div class="relative flex items-center ml-2">
+								<input type="text" id="inline-search-input" placeholder="Buscar noticia o tema..." class="py-1.5 pl-3 pr-8 rounded-full bg-emerald-950/70 text-white placeholder-emerald-200/70 border border-emerald-400/40 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-white w-full shadow-inner">
+								<button onclick="toggleInlineSearch()" class="absolute right-2 text-emerald-200 hover:text-white text-xs p-1 focus:outline-none" title="Cerrar búsqueda"><i class="fas fa-times"></i></button>
+							</div>
+						</div>
+					</div>
+					<div class="hidden md:flex items-center space-x-6 font-medium text-sm lg:text-base md:ml-auto">
+						<a href="el_blog_del_chino.html#inicio" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Inicio</a>
+						<a href="el_blog_del_chino.html#noticias" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Noticias</a>
+						<a href="el_blog_del_chino.html#reviews" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Reviews</a>
+						<a href="el_blog_del_chino.html#videojuegos" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Videojuegos</a>
+						<a href="musica_blog.html" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Musica</a>
+						<a href="contactos_blog.html" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Contacto</a>
+					</div>
+					<div class="ml-auto md:ml-3 flex items-center gap-1">
+						<button id="color-mode-toggle" onclick="toggleColorMode()" class="p-2 rounded hover:bg-brandDarkGreen transition-colors focus:outline-none" aria-label="Cambiar a modo oscuro" title="Cambiar a modo oscuro" aria-pressed="false"><i class="fas fa-moon" aria-hidden="true"></i></button>
+						<button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded hover:bg-brandDarkGreen text-xl focus:outline-none" title="Abrir menú"><i class="fas fa-bars"></i></button>
+					</div>
+				</div>
+			</div>
+			<div id="mobile-menu" class="hidden md:hidden bg-brandDarkGreen border-t border-emerald-700 px-4 py-3 space-y-2 text-sm font-medium">
+				<a href="el_blog_del_chino.html#inicio" class="block py-1 hover:text-emerald-200">Inicio</a>
+				<a href="el_blog_del_chino.html#noticias" class="block py-1 hover:text-emerald-200">Noticias</a>
+				<a href="el_blog_del_chino.html#reviews" class="block py-1 hover:text-emerald-200">Reviews</a>
+				<a href="el_blog_del_chino.html#videojuegos" class="block py-1 hover:text-emerald-200">Videojuegos</a>
+				<a href="musica_blog.html" class="block py-1 hover:text-emerald-200">Musica</a>
+				<a href="contactos_blog.html" class="block py-1 hover:text-emerald-200">Contacto</a>
+			</div>
+		</nav>
+	</header>
+
+	<main id="noticias" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-grow w-full search-targetable">
+		<article>
+			<section class="relative isolate min-h-[380px] sm:min-h-[480px] overflow-hidden rounded-lg bg-black mb-10 flex items-end">
+				<img id="article-image" src="" alt="" class="absolute inset-0 w-full h-full object-cover">
+				<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent"></div>
+				<div class="relative z-10 w-full max-w-4xl p-5 sm:p-8 md:p-10">
+					<p id="article-franchise" class="text-emerald-300 text-xs sm:text-sm font-bold uppercase tracking-widest mb-3"></p>
+					<h1 id="article-title" class="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight"></h1>
+					<p id="article-slogan" class="mt-3 text-base sm:text-lg font-semibold text-white"></p>
+					<p id="article-summary" class="mt-2 max-w-3xl text-sm sm:text-base text-gray-200 leading-relaxed"></p>
+					<div id="article-actions" class="flex flex-wrap gap-3 mt-6"></div>
+					<p id="article-caption" class="mt-5 text-xs text-gray-300"></p>
+				</div>
+			</section>
+
+			<nav aria-label="Secciones del artículo" class="flex flex-wrap gap-x-5 gap-y-2 border-b border-gray-200 pb-4 mb-8 text-sm font-semibold text-gray-600">
+				<a href="#description" class="hover:text-brandGreen">Sinopsis</a>
+				<a href="#gameplay" class="hover:text-brandGreen">Gameplay</a>
+				<a href="#requirements" class="hover:text-brandGreen">Requisitos</a>
+				<a href="#platforms" class="hover:text-brandGreen">Plataformas</a>
+				<a href="#videos" class="hover:text-brandGreen">Videos</a>
+				<a href="#gallery" class="hover:text-brandGreen">Galería</a>
+				<a href="#features" class="hover:text-brandGreen">Features</a>
+				<a href="#lore" class="hover:text-brandGreen">Lore</a>
+				<a href="#characters" class="hover:text-brandGreen">Personajes</a>
+			</nav>
+
+			<div id="article-sections" class="space-y-10"></div>
+		</article>
+	</main>
+
+	<footer id="contacto" class="bg-brandDark text-gray-300 border-t-4 border-brandGreen mt-12 py-10">
+		<div class="max-w-6xl mx-auto px-4 sm:px-6">
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+				<div>
+					<h4 class="text-xl font-bold text-white mb-3">El Blog Del Chino</h4>
+					<p class="text-sm text-gray-400 leading-relaxed mb-4">Tu portal de noticias, análisis y reviews sobre el mundo de los videojuegos, cine, tecnología y entretenimiento digital.</p>
+					<p class="text-xs text-gray-400">&copy; 2026 <span class="text-white font-semibold">Ruben Eduardo Ortiz</span>. Todos los derechos reservados.</p>
+				</div>
+				<div>
+					<h4 class="text-base font-bold text-white mb-3 uppercase tracking-wider">Enlaces Rápidos</h4>
+					<ul class="space-y-2 text-sm text-gray-400">
+						<li><a href="el_blog_del_chino.html#inicio" class="hover:text-emerald-400 transition-colors"><i class="fas fa-chevron-right text-xs text-brandGreen mr-2"></i>Inicio</a></li>
+						<li><a href="el_blog_del_chino.html#noticias" class="hover:text-emerald-400 transition-colors"><i class="fas fa-chevron-right text-xs text-brandGreen mr-2"></i>Noticias Destacadas</a></li>
+						<li><a href="el_blog_del_chino.html#reviews" class="hover:text-emerald-400 transition-colors"><i class="fas fa-chevron-right text-xs text-brandGreen mr-2"></i>Reviews de Juegos</a></li>
+						<li><a href="el_blog_del_chino.html#videojuegos" class="hover:text-emerald-400 transition-colors"><i class="fas fa-chevron-right text-xs text-brandGreen mr-2"></i>Análisis Técnico</a></li>
+					</ul>
+				</div>
+				<div>
+					<h4 class="text-base font-bold text-white mb-3 uppercase tracking-wider">Contactos</h4>
+					<div class="space-y-3 text-sm">
+						<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-brandGreen/20 text-emerald-400 flex items-center justify-center"><i class="fas fa-envelope"></i></div><div><p class="text-xs text-gray-400">Correo Electrónico:</p><a href="mailto:srgatomctaco@gmail.com" class="text-gray-200 hover:text-emerald-400 font-medium transition-colors">srgatomctaco@gmail.com</a></div></div>
+						<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-brandGreen/20 text-emerald-400 flex items-center justify-center"><i class="fas fa-phone-alt"></i></div><div><p class="text-xs text-gray-400">Número de Teléfono:</p><a href="" class="text-gray-200 hover:text-emerald-400 font-medium transition-colors">936692162</a></div></div>
+					</div>
+				</div>
+			</div>
+			<div class="border-t border-gray-800 pt-6 text-center text-xs text-gray-400 flex flex-col sm:flex-row justify-between items-center gap-4">
+				<p>Ruben Eduardo Ortiz - El Blog Del Chino</p>
+				<div class="flex space-x-4 text-base"><a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-twitter"></i></a><a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-youtube"></i></a><a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-discord"></i></a><a href="#" class="text-gray-400 hover:text-emerald-400"><i class="fab fa-instagram"></i></a></div>
+			</div>
+		</div>
+	</footer>
+
+	<script>
+		const articles = {
+			gta6: {
+				title: 'GTA VI: el esperado regreso a Vice City',
+				summary: 'Jason y Lucia buscan abrirse camino en Leonida, pero salir adelante juntos podría llevarlos a una peligrosa cadena de problemas.',
+				image: 'imgblog/imgsliders/gta6banner.avif',
+				imageAlt: 'Jason y Lucia en el mundo de GTA VI',
+				caption: 'GTA VI transcurre en Leonida, un estado ficticio que incluye Vice City.',
+				sections: [
+					{ title: 'Descripción de la noticia', paragraphs: ['Grand Theft Auto VI presenta una nueva historia criminal protagonizada por Lucia Caminos y Jason Duval. Tras salir de prisión, Lucia intenta empezar de nuevo; Jason, que ya conoce el mundo del crimen, se convierte en su compañero en una aventura que los lleva por Leonida.', 'La relación entre ambos está en el centro de la trama. Mientras buscan una vida mejor, sus decisiones los acercan a una conspiración que se extiende por el estado. Este artículo resume la información presentada oficialmente y evita revelar giros de la historia.'] },
+					{ title: 'Gameplay', paragraphs: ['Los avances muestran exploración en mundo abierto, conducción, enfrentamientos y momentos protagonizados por Jason y Lucia. La acción alterna entre la vida en Vice City y otras zonas de Leonida, con actividades y situaciones que forman parte de su recorrido criminal.'], video: 'vidblog/GTA 6 trailer1.mp4' },
+					{ title: '¿Qué hay de nuevo?', paragraphs: ['Una de las novedades más visibles es que la historia gira alrededor de dos protagonistas y de la relación entre ellos. La aventura también se traslada a Leonida, un escenario amplio inspirado en Florida que va mucho más allá de las calles de Vice City.', 'Los materiales publicados apuntan a un mundo con más variedad de lugares, personajes y situaciones. Los detalles concretos de muchas actividades y sistemas se conocerán mejor cuando se publique información adicional.'] },
+					{ title: 'Detalles', details: [['Desarrollador y editor', 'Rockstar Games'], ['Género', 'Acción y aventura de mundo abierto'], ['Protagonistas', 'Lucia Caminos y Jason Duval'], ['Escenario', 'Leonida y Vice City']] },
+					{ title: 'Rendimiento y requisitos para PC', paragraphs: ['Los siguientes requisitos se transcribieron de la imagen compartida y no están confirmados oficialmente por Rockstar.'], requirements: [['Requisitos mínimos', 'Consulta la configuración mínima indicada en la sección de requisitos del sistema.'], ['Requisitos recomendados', 'Consulta la configuración recomendada indicada en la sección de requisitos del sistema.']], footnote: 'Toma estos datos como no oficiales hasta que Rockstar publique los requisitos para PC.' },
+					{ title: 'Expectativas', paragraphs: ['La expectativa es alta por el regreso a Vice City, la escala del mundo y el enfoque en Jason y Lucia. El reto será que la historia, la exploración y las actividades formen una experiencia coherente, no solo un escenario impresionante. Hasta jugarlo, esas ideas siguen siendo expectativas basadas en lo mostrado.'] },
+					{ title: 'Veredicto final', paragraphs: ['GTA VI tiene una premisa atractiva y un escenario con mucho potencial. La pareja protagonista le da un centro emocional a la historia y Leonida promete variedad para explorar. Por ahora, el veredicto es de grandes expectativas; la valoración definitiva dependerá de cómo funcionen la historia y el gameplay en el juego completo.'], final: true }
+				]
+			},
+			'monster-hunter': {
+				title: 'Monster Hunter Wilds: expedición a las Tierras Prohibidas',
+				summary: 'Una comisión del Gremio se adentra en una región desconocida donde el clima, las criaturas y el ecosistema cambian constantemente.',
+				image: 'imgblog/imgsliders/monsterhunterbanner.avif',
+				imageAlt: 'Monster Hunter Wilds en las Tierras Prohibidas',
+				caption: 'La expedición explora un ecosistema donde las condiciones y las criaturas cambian.',
+				sections: [
+					{ title: 'Descripción de la noticia', paragraphs: ['Monster Hunter Wilds lleva al cazador a las Tierras Prohibidas como parte de una comisión de investigación del Gremio. La expedición debe explorar una región aislada y averiguar qué amenaza a sus habitantes y a las criaturas que viven allí.', 'La historia sigue al equipo de cazadores y a Nata, un joven relacionado con los sucesos que impulsan la expedición. A medida que avanzan, las pistas sobre una poderosa criatura conectan el misterio con el frágil equilibrio del entorno.'] },
+					{ title: 'Gameplay', paragraphs: ['La base sigue siendo preparar el equipo, rastrear monstruos y aprovechar sus puntos débiles. El modo Concentración ayuda a apuntar ataques y detectar heridas, mientras que el Seikret permite desplazarse por el terreno y llevar un arma secundaria para cambiar de estilo durante la cacería.'], video: 'vidblog/Monsterhunter wilds ascendance trailer1.mp4' },
+					{ title: '¿Qué hay de nuevo?', paragraphs: ['El ecosistema dinámico es el cambio más visible: las zonas alternan entre periodos de escasez, condiciones severas y abundancia. Esas fases afectan qué monstruos aparecen, cómo se comportan y qué oportunidades encuentra el cazador.', 'Las heridas visibles y el modo Concentración dan más información durante el combate, y el Seikret integra desplazamiento, seguimiento y cambio de equipo en una sola herramienta.'] },
+					{ title: 'Detalles', details: [['Desarrollador y editor', 'Capcom'], ['Género', 'Acción y RPG de cacería'], ['Escenario', 'Las Tierras Prohibidas'], ['Plataformas', 'PlayStation 5, Xbox Series X|S y PC']] },
+					{ title: 'Expectativas', paragraphs: ['La propuesta destaca cuando el entorno obliga a cambiar el plan en lugar de limitarse a servir de fondo. La variedad de armas y el ciclo del ecosistema dan motivos para observar la zona y adaptar cada cacería; el ritmo y el equilibrio entre misiones son los puntos que más influyen en cuánto invita a seguir jugando.'] },
+					{ title: 'Veredicto final', paragraphs: ['Monster Hunter Wilds amplía la fórmula con un mundo más cambiante y herramientas que conectan exploración y combate. Su mayor atractivo está en leer el ecosistema y ajustar la estrategia; es una entrega especialmente interesante para quienes disfrutan preparar cada cacería y dominar distintas armas.'], final: true }
+				]
+			},
+			starcraft: {
+				title: 'StarCraft: un nuevo shooter de mundo abierto',
+				summary: 'La noticia apunta a un giro para la saga: una aventura de disparos en mundo abierto, con lanzamiento mencionado para 2030.',
+				image: 'imgblog/topcategoriasimg/topstarcraft.webp',
+				imageAlt: 'Arte de la noticia sobre el nuevo juego de StarCraft',
+				caption: 'La propuesta descrita cambiaría la estrategia clásica de StarCraft por una aventura de disparos.',
+				sections: [
+					{ title: 'Descripción de la noticia', paragraphs: ['La noticia anuncia un nuevo proyecto ambientado en el universo de StarCraft, planteado como un shooter de mundo abierto. La propuesta supondría un cambio notable frente a la estrategia en tiempo real por la que se conoce la saga.'] },
+					{ title: 'Gameplay', paragraphs: ['Por ahora, la información resumida en el anuncio no permite detallar sistemas, perspectiva, misiones ni modos de juego. El formato de mundo abierto y disparos es el dato principal; los detalles del bucle jugable quedan pendientes de una presentación más completa.'] },
+					{ title: '¿Qué hay de nuevo?', paragraphs: ['El cambio más importante es de género y escala: StarCraft pasaría de dirigir ejércitos desde una perspectiva estratégica a explorar y combatir en un entorno abierto. La noticia sitúa su llegada en 2030, aunque faltan detalles sobre su desarrollo y alcance.'] },
+					{ title: 'Detalles', details: [['Franquicia', 'StarCraft'], ['Género anunciado', 'Shooter de mundo abierto'], ['Universo', 'Ciencia ficción y conflictos espaciales'], ['Lanzamiento mencionado', '2030']] },
+					{ title: 'Expectativas', paragraphs: ['El universo de StarCraft ofrece material para una aventura centrada en personajes, exploración y conflictos entre facciones. La gran incógnita será cómo conservar su identidad dentro de un género distinto y qué libertad ofrecerá el mundo abierto.'] },
+					{ title: 'Veredicto final', paragraphs: ['La idea resulta llamativa por lo diferente que sería respecto a los juegos clásicos de la saga, pero aún falta información para valorar su ejecución. Por ahora queda como un anuncio prometedor, pendiente de conocer gameplay real, plataformas y alcance.'], final: true }
+				]
+			},
+			witcher3: {
+				title: 'The Witcher 3: Song of The Past y un remaster gratuito',
+				summary: 'Un nuevo contenido descargable y una actualización gratuita serían motivos para regresar a la aventura de Geralt.',
+				image: 'imgblog/topcategoriasimg/topthewitcher3.jpg',
+				imageAlt: 'Arte de The Witcher 3: Wild Hunt',
+				caption: 'La noticia reúne el DLC Song of The Past y un remaster gratuito para propietarios del juego.',
+				sections: [
+					{ title: 'Descripción de la noticia', paragraphs: ['La noticia presenta dos razones para volver a The Witcher 3: Song of The Past, un contenido descargable, y un remaster gratuito para quienes ya tengan el juego. La propuesta apunta tanto a quienes quieren continuar la aventura como a quienes desean recorrerla de nuevo con mejoras visuales.'] },
+					{ title: 'Gameplay', paragraphs: ['La base de la experiencia sigue siendo la aventura de rol de Geralt: recorrer el Continente, aceptar contratos, investigar monstruos y tomar decisiones que afectan a sus personajes. El contenido nuevo se integraría en esa estructura; todavía conviene esperar detalles para conocer su duración y mecánicas específicas.'] },
+					{ title: '¿Qué hay de nuevo?', paragraphs: ['Song of The Past se plantea como una nueva historia descargable, mientras que el remaster busca actualizar la presentación del juego. Según la noticia, la actualización sería gratuita para los jugadores que ya lo poseen.'] },
+					{ title: 'Detalles', details: [['Juego', 'The Witcher 3: Wild Hunt'], ['Desarrollador', 'CD Projekt Red'], ['Contenido anunciado', 'DLC Song of The Past y remaster'], ['Precio del remaster', 'Gratuito para propietarios, según la noticia']] },
+					{ title: 'Expectativas', paragraphs: ['El atractivo dependerá de cuánto aporte la nueva historia y de qué mejoras incluya el remaster en cada plataforma. Para los fans, una expansión con una trama propia puede ser una buena excusa para regresar; los detalles concretos determinarán su alcance.'] },
+					{ title: 'Veredicto final', paragraphs: ['La combinación de una historia adicional y una actualización gratuita suena atractiva para quienes ya tienen The Witcher 3. La valoración final dependerá del contenido real de Song of The Past y de las mejoras incluidas en el remaster.'], final: true }
+				]
+			}
+		};
+
+		const requestedSlug = new URLSearchParams(window.location.search).get('juego') || 'gta6';
+		const article = articles[requestedSlug] || articles.gta6;
+		const gameInfo = {
+			gta6: {
+				franchise: 'Rockstar Games',
+				slogan: 'Dos aliados. Una ciudad que nunca juega limpio.',
+				gameplayModes: 'Modo para un jugador; no hay detalles confirmados en esta ficha sobre otros modos.',
+				storeUrl: 'https://www.rockstargames.com/VI',
+				platforms: [['PlayStation 5', '19 de noviembre de 2026'], ['Xbox Series X|S', '19 de noviembre de 2026']],
+				requirementsNote: 'Datos transcritos de la imagen compartida; no están confirmados oficialmente por Rockstar.',
+				requirements: [
+					{ title: 'Mínimos', rows: [['Sistema operativo', 'Windows 10 (último service pack), 64 bits'], ['Procesador', 'Intel Core i7-4770 o AMD FX-9590'], ['Memoria', '8 GB de RAM'], ['Tarjeta gráfica', 'NVIDIA GeForce GTX 1630 (4 GB de VRAM) o AMD Radeon RX 6400 (4 GB de VRAM)'], ['Almacenamiento', '105 GB disponibles; se requiere SSD'], ['Tarjeta de sonido', 'Compatible con DirectX 10'], ['Notas adicionales', 'Los requisitos pueden cambiar con el contenido descargable y las actualizaciones. Consulta al fabricante del hardware para verificar la compatibilidad actual.']] },
+					{ title: 'Recomendados', rows: [['Sistema operativo', 'Windows 11, 64 bits'], ['Procesador', 'Intel Core i5-9600K o AMD Ryzen 5 3600'], ['Memoria', '16 GB de RAM'], ['Tarjeta gráfica', 'NVIDIA GeForce RTX 3060 (8 GB de VRAM) o AMD Radeon RX 6600 XT (8 GB de VRAM)'], ['Almacenamiento', '105 GB disponibles'], ['Tarjeta de sonido', 'Compatible con Windows Spatial Sound; contenido Dolby Atmos necesario para la experiencia Dolby Atmos'], ['Notas adicionales', 'Compatible con DirectStorage.']] }
+				],
+				videos: [{ title: 'Tráiler de GTA VI', src: 'vidblog/GTA 6 trailer1.mp4' }],
+				gallery: [
+					{ src: 'noticiasimg/imggallery/gta6/gtaimg1.jpg', alt: 'Imagen de GTA VI 1' },
+					{ src: 'noticiasimg/imggallery/gta6/gtaimg2.jpg', alt: 'Imagen de GTA VI 2' },
+					{ src: 'noticiasimg/imggallery/gta6/gtaimg3.jpg', alt: 'Imagen de GTA VI 3' },
+					{ src: 'noticiasimg/imggallery/gta6/gtaimg4.jpg', alt: 'Imagen de GTA VI 4' },
+					{ src: 'noticiasimg/imggallery/gta6/gtaimg5.jpg', alt: 'Imagen de GTA VI 5' },
+					{ src: 'noticiasimg/imggallery/gta6/gtaimg6.jpg', alt: 'Imagen de GTA VI 6' },
+					{ src: 'noticiasimg/imggallery/gta6/gtaimg7.avif', alt: 'Imagen de GTA VI 7' }
+				],
+				features: [
+					{ icon: 'fa-users', title: 'Dos protagonistas', text: 'La historia sigue a Jason y Lucia y a la relación que construyen.' },
+					{ icon: 'fa-city', title: 'Leonida y Vice City', text: 'Un escenario amplio inspirado en Florida, con ciudad y zonas rurales.' },
+					{ icon: 'fa-car', title: 'Crimen y mundo abierto', text: 'Exploración, conducción y decisiones dentro de una historia criminal.' }
+				],
+				lore: ['Jason y Lucia intentan salir adelante en Leonida, pero un golpe que sale mal los arrastra a una conspiración criminal. La historia gira alrededor de su confianza y de las decisiones que toman para sobrevivir.'],
+				characters: [
+					{ name: 'Lucia Caminos', role: 'Protagonista', text: 'Tras salir de prisión, busca una oportunidad para cambiar su vida.', image: 'noticiasimg/imggallery/characters/lucia.jpg', imageAlt: 'Retrato de Lucia Caminos en GTA VI' },
+					{ name: 'Jason Duval', role: 'Protagonista', text: 'Conoce el mundo criminal de Leonida y termina formando equipo con Lucia.', image: 'noticiasimg/imggallery/characters/jason.jpg', imageAlt: 'Retrato de Jason Duval en GTA VI' }
+				]
+			},
+			'monster-hunter': {
+				franchise: 'Capcom',
+				slogan: 'Lee el entorno. Prepárate. Sal de cacería.',
+				gameplayModes: 'Cacerías en solitario o en cooperativo multijugador.',
+				storeUrl: 'https://store.steampowered.com/app/2246340/Monster_Hunter_Wilds/',
+				platforms: [['PlayStation 5', '28 de febrero de 2025'], ['Xbox Series X|S', '28 de febrero de 2025'], ['PC', '28 de febrero de 2025']],
+				requirementsNote: 'Requisitos para PC de Monster Hunter Wilds. Se requiere un procesador y un sistema operativo de 64 bits.',
+				requirements: [
+					{ title: 'Mínimos', rows: [['Sistema operativo', 'Windows 10 (64 bits) o Windows 11 (64 bits)'], ['Procesador', 'Intel Core i5-10400 o Intel Core i3-12100 o AMD Ryzen 5 3600'], ['Memoria', '16 GB de RAM'], ['Tarjeta gráfica', 'NVIDIA GeForce GTX 1660 (6 GB de VRAM) o AMD Radeon RX 5500 XT (8 GB de VRAM)'], ['DirectX', 'Versión 12'], ['Red', 'Conexión de banda ancha a Internet'], ['Almacenamiento', '75 GB disponibles'], ['Notas adicionales', 'Se requiere SSD. Rendimiento esperado: 1080p (reescalado desde una resolución nativa de 720p) a 30 FPS con los ajustes gráficos más bajos. Compatible con DirectStorage.']] },
+					{ title: 'Recomendados', rows: [['Sistema operativo', 'Windows 10 (64 bits) o Windows 11 (64 bits)'], ['Procesador', 'Intel Core i5-10400 o Intel Core i3-12100 o AMD Ryzen 5 3600'], ['Memoria', '16 GB de RAM'], ['Tarjeta gráfica', 'NVIDIA GeForce RTX 2060 Super (8 GB de VRAM) o AMD Radeon RX 6600 (8 GB de VRAM)'], ['DirectX', 'Versión 12'], ['Red', 'Conexión de banda ancha a Internet'], ['Almacenamiento', '75 GB disponibles'], ['Notas adicionales', 'Se requiere SSD. Rendimiento esperado: 1080p a 60 FPS con Frame Generation activado y ajustes gráficos medios. Compatible con DirectStorage.']] }
+				],
+				videos: [{ title: 'Tráiler de Monster Hunter Wilds', src: 'vidblog/Monsterhunter wilds ascendance trailer1.mp4' }],
+				gallery: [
+					{ src: 'noticiasimg/imggallery/mhw/mhw1.webp', alt: 'Imagen de Monster Hunter Wilds 1' },
+					{ src: 'noticiasimg/imggallery/mhw/mhw2.jpg', alt: 'Imagen de Monster Hunter Wilds 2' },
+					{ src: 'noticiasimg/imggallery/mhw/mhw3.webp', alt: 'Imagen de Monster Hunter Wilds 3' },
+					{ src: 'noticiasimg/imggallery/mhw/mhw4.png', alt: 'Imagen de Monster Hunter Wilds 4' },
+					{ src: 'noticiasimg/imggallery/mhw/mhw5.avif', alt: 'Imagen de Monster Hunter Wilds 5' },
+					{ src: 'noticiasimg/imggallery/mhw/mhw6.jpg', alt: 'Imagen de Monster Hunter Wilds 6' },
+					{ src: 'noticiasimg/imggallery/mhw/mhw7.jpg', alt: 'Imagen de Monster Hunter Wilds 7' }
+				],
+				features: [
+					{ icon: 'fa-cloud-sun', title: 'Ecosistema dinámico', text: 'Las fases del entorno afectan los recursos, las criaturas y la preparación de cada cacería.' },
+					{ icon: 'fa-crosshairs', title: 'Modo Concentración', text: 'Permite apuntar con precisión y detectar heridas durante el combate.' },
+					{ icon: 'fa-horse', title: 'Seikret', text: 'Compañero de desplazamiento que ayuda a rastrear y cambiar de equipo.' }
+				],
+				lore: ['El Gremio envía una comisión a las Tierras Prohibidas para investigar una región aislada y proteger a sus habitantes. La expedición y Nata quedan vinculados al misterio de una criatura que amenaza el equilibrio del lugar.'],
+				characters: [
+					{ name: 'El cazador', role: 'Protagonista', text: 'Forma parte de la comisión de investigación y adapta su equipo a cada monstruo.', image: 'imgblog/imgsliders/monsterhunterbanner.avif' },
+					{ name: 'Nata', role: 'Personaje clave', text: 'Un joven relacionado con los sucesos que ponen en marcha la expedición.', image: 'imgblog/imgsliders/monsterhunterbanner.avif' }
+				]
+			},
+			starcraft: {
+				franchise: 'Universo StarCraft',
+				slogan: 'Una nueva perspectiva para un universo de ciencia ficción.',
+				gameplayModes: 'Modos de juego por anunciar.',
+				platforms: [['Plataformas', 'Por anunciar'], ['Lanzamiento', '2030, según la noticia']],
+				requirementsNote: 'Requisitos transcritos de la imagen proporcionada; verifica los datos antes de publicar, ya que pueden cambiar.',
+				requirements: [
+					{ title: 'Requisitos mínimos', rows: [['Sistema operativo', 'Windows 10 o Windows 11 (64 bits)'], ['Procesador', 'Intel Core 2 Duo o AMD Athlon 64 X2 5600+ (o superior)'], ['Memoria RAM', '2 GB'], ['Tarjeta gráfica', 'NVIDIA GeForce 7600 GT, ATI Radeon HD 2600 XT o Intel HD Graphics 3000 (o superior)'], ['Almacenamiento', 'Aproximadamente 30 GB libres'], ['Conexión', 'Internet de banda ancha y cuenta de Battle.net']] },
+					{ title: 'Requisitos recomendados', rows: [['Sistema operativo', 'Windows 10 o Windows 11 (64 bits)'], ['Procesador', 'Intel Core i5 o AMD FX Series (o superior)'], ['Memoria RAM', '4 GB a 8 GB'], ['Tarjeta gráfica', 'NVIDIA GeForce GTX 650 o AMD Radeon HD 7790 (o superior)'], ['Almacenamiento', '30 GB libres (se recomienda SSD)']] }
+				],
+				videos: [{ title: 'Tráiler de StarCraft', src: 'vidblog/starcrafttrailer.mp4' }],
+				gallery: [],
+				features: [
+					{ icon: 'fa-earth-americas', title: 'Mundo abierto', text: 'La noticia describe una aventura de disparos en un entorno abierto.' },
+					{ icon: 'fa-crosshairs', title: 'Cambio de género', text: 'El proyecto se apartaría de la estrategia en tiempo real clásica de la saga.' },
+					{ icon: 'fa-circle-question', title: 'Detalles pendientes', text: 'No se han presentado sistemas de combate, misiones ni modos de juego.' }
+				],
+				lore: ['La noticia sitúa el proyecto en el universo de ciencia ficción de StarCraft. La trama, la época y su relación con las historias anteriores todavía no están detalladas.'],
+				characters: [{ name: 'Personajes por anunciar', role: 'Sin confirmar', text: 'El anuncio resumido no identifica protagonistas ni antagonistas.', image: 'imgblog/topcategoriasimg/topstarcraft.webp' }]
+			},
+			witcher3: {
+				franchise: 'CD Projekt Red',
+				slogan: 'Una nueva excusa para volver al Continente.',
+				gameplayModes: 'Aventura de rol para un jugador.',
+				storeUrl: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/',
+				platforms: [['PC, PlayStation y Xbox', 'Juego base disponible; fechas varían por edición'], ['Nintendo Switch', 'Juego base disponible'], ['DLC y remaster de la noticia', 'Fecha por confirmar']],
+				requirementsNote: 'Requisitos para PC de The Witcher 3 según los datos proporcionados. Se requiere Windows 11 de 64 bits y una unidad SSD.',
+				requirements: [
+					{ title: 'Mínimos', rows: [['Sistema operativo', 'Windows 11 de 64 bits'], ['Procesador', 'Intel Core i5-8400 o AMD Ryzen 5 2600'], ['Memoria', '12 GB de RAM'], ['Tarjeta gráfica', 'GeForce GTX 1660, Radeon RX 5500 XT de 8 GB o Intel Arc A580'], ['Almacenamiento', '60 GB disponibles en SSD'], ['VRAM', '6 GB']] },
+					{ title: 'Recomendados', rows: [['Sistema operativo', 'Windows 11 de 64 bits'], ['Procesador', 'Intel Core i7-8700K o AMD Ryzen 5 3600'], ['Memoria', '16 GB de RAM'], ['Tarjeta gráfica', 'RTX 2060 Super, Radeon RX 6600 XT o Intel Arc B580'], ['Almacenamiento', '60 GB disponibles en SSD'], ['VRAM', '8 GB']] }
+				],
+				videos: [],
+				gallery: [
+					{ src: 'noticiasimg/imggallery/thewitcher/thewitcherimg1.avif', alt: 'Imagen de The Witcher 3: Wild Hunt 1' },
+					{ src: 'noticiasimg/imggallery/thewitcher/thewitcherimg2.avif', alt: 'Imagen de The Witcher 3: Wild Hunt 2' },
+					{ src: 'noticiasimg/imggallery/thewitcher/thewitcherimg3.avif', alt: 'Imagen de The Witcher 3: Wild Hunt 3' },
+					{ src: 'noticiasimg/imggallery/thewitcher/thewitcherimg4.jpg', alt: 'Imagen de The Witcher 3: Wild Hunt 4' },
+					{ src: 'noticiasimg/imggallery/thewitcher/thewitcherimg5.avif', alt: 'Imagen de The Witcher 3: Wild Hunt 5' },
+					{ src: 'noticiasimg/imggallery/thewitcher/thewitcherimg6.avif', alt: 'Imagen de The Witcher 3: Wild Hunt 6' },
+					{ src: 'noticiasimg/imggallery/thewitcher/thewitcherimg7.jpg', alt: 'Imagen de The Witcher 3: Wild Hunt 7' }
+				],
+				features: [
+					{ icon: 'fa-book-open', title: 'RPG narrativo', text: 'Aventura centrada en misiones, personajes y decisiones.' },
+					{ icon: 'fa-wand-sparkles', title: 'Cacería de monstruos', text: 'Geralt investiga criaturas y prepara estrategias para enfrentarlas.' },
+					{ icon: 'fa-image', title: 'Nueva presentación', text: 'La noticia menciona un remaster gratuito para propietarios del juego.' }
+				],
+				lore: ['Geralt de Rivia recorre el Continente como brujo, aceptando contratos y siguiendo una historia marcada por conflictos políticos y relaciones personales. Song of The Past se presenta en esta noticia como contenido adicional, con detalles narrativos aún pendientes.'],
+				characters: [{ name: 'Geralt de Rivia', role: 'Protagonista', text: 'Brujo y cazador de monstruos que protagoniza la aventura.', image: 'noticiasimg/imggallery/characters/personaje1.jpg' }]
+			}
+		};
+		const pageInfo = gameInfo[requestedSlug] || gameInfo.gta6;
+		const legacySection = title => article.sections.find(section => section.title === title);
+		document.title = `${article.title} | El Blog Del Chino`;
+		document.getElementById('article-title').textContent = article.title;
+		document.getElementById('article-summary').textContent = article.summary;
+		document.getElementById('article-image').src = article.image;
+		document.getElementById('article-image').alt = article.imageAlt;
+		document.getElementById('article-caption').textContent = article.caption;
+		document.getElementById('article-franchise').textContent = pageInfo.franchise;
+		document.getElementById('article-slogan').textContent = pageInfo.slogan;
+		const articleActions = document.getElementById('article-actions');
+		const addHeroAction = (label, href, icon, external = false) => {
+			const action = document.createElement('a');
+			action.href = href;
+			action.className = 'inline-flex items-center gap-2 bg-brandGreen hover:bg-brandDarkGreen text-white px-4 py-2.5 rounded-md text-sm font-bold transition-colors';
+			if (external) {
+				action.target = '_blank';
+				action.rel = 'noopener noreferrer';
+			}
+			const iconElement = document.createElement('i');
+			iconElement.className = `fas ${icon}`;
+			iconElement.setAttribute('aria-hidden', 'true');
+			action.append(iconElement, document.createTextNode(label));
+			articleActions.appendChild(action);
+		};
+		if (pageInfo.storeUrl) addHeroAction('Comprar', pageInfo.storeUrl, 'fa-arrow-up-right-from-square', true);
+		if (pageInfo.videos.length) addHeroAction('Ver tráiler', '#videos', 'fa-play');
+		addHeroAction('Plataformas', '#platforms', 'fa-gamepad');
+		const sectionsContainer = document.getElementById('article-sections');
+		article.sections.forEach((content, index) => {
+			const section = document.createElement('section');
+			section.className = index === 0 ? '' : content.final ? 'border-t-4 border-brandGreen pt-6 pb-2' : 'border-t border-gray-200 pt-8';
+			const heading = document.createElement('h2');
+			heading.className = 'text-xl sm:text-2xl font-bold text-gray-900 mb-3';
+			heading.textContent = content.title;
+			section.appendChild(heading);
+			content.paragraphs?.forEach(text => {
+				const paragraph = document.createElement('p');
+				paragraph.className = 'text-gray-700 leading-relaxed mb-4';
+				paragraph.textContent = text;
+				section.appendChild(paragraph);
+			});
+			if (content.video) {
+				const frame = document.createElement('div');
+				frame.className = 'rounded-lg overflow-hidden bg-black shadow-lg mt-5';
+				const video = document.createElement('video');
+				video.className = 'w-full aspect-video object-contain';
+				video.controls = true;
+				video.muted = true;
+				video.playsInline = true;
+				video.preload = 'metadata';
+				const source = document.createElement('source');
+				source.src = content.video;
+				source.type = 'video/mp4';
+				video.appendChild(source);
+				frame.appendChild(video);
+				section.appendChild(frame);
+			}
+			if (content.details) {
+				const detailsList = document.createElement('dl');
+				detailsList.className = 'grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm';
+				content.details.forEach(([label, value]) => {
+					const wrapper = document.createElement('div');
+					const term = document.createElement('dt');
+					const description = document.createElement('dd');
+					term.className = 'font-bold text-gray-900';
+					term.textContent = label;
+					description.className = 'mt-1 text-gray-700';
+					description.textContent = value;
+					wrapper.append(term, description);
+					detailsList.appendChild(wrapper);
+				});
+				section.appendChild(detailsList);
+			}
+			if (content.requirements) {
+				const requirements = document.createElement('div');
+				requirements.className = 'grid grid-cols-1 sm:grid-cols-2 gap-4';
+				content.requirements.forEach(([label, value], index) => {
+					const card = document.createElement('div');
+					card.className = `border border-gray-200 border-l-4 ${index ? 'border-l-gray-500' : 'border-l-brandGreen'} p-4`;
+					const title = document.createElement('h3');
+					const text = document.createElement('p');
+					title.className = 'font-bold text-gray-900';
+					title.textContent = label;
+					text.className = 'mt-2 text-sm text-gray-700';
+					text.textContent = value;
+					card.append(title, text);
+					requirements.appendChild(card);
+				});
+				section.appendChild(requirements);
+			}
+			if (content.footnote) {
+				const footnote = document.createElement('p');
+				footnote.className = 'mt-4 text-xs text-gray-500';
+				footnote.textContent = content.footnote;
+				section.appendChild(footnote);
+			}
+			sectionsContainer.appendChild(section);
+		});
+
+		const findArticleSection = title => article.sections.find(section => section.title === title);
+		const synopsis = findArticleSection('Descripción de la noticia');
+		const gameplay = findArticleSection('Gameplay');
+		const newFeatures = findArticleSection('¿Qué hay de nuevo?');
+		const generalDetails = findArticleSection('Detalles');
+		const expectations = findArticleSection('Expectativas');
+		const verdict = findArticleSection('Veredicto final');
+		const pageSections = [
+			{ id: 'description', title: 'Descripción / Sinopsis', paragraphs: synopsis?.paragraphs || [] },
+			{ id: 'gameplay', title: 'Gameplay', paragraphs: gameplay?.paragraphs || [], gameplayModes: pageInfo.gameplayModes },
+			{ id: 'requirements', title: 'Requisitos del sistema', note: pageInfo.requirementsNote, requirements: pageInfo.requirements },
+			{ id: 'platforms', title: 'Plataformas y lanzamiento', platforms: pageInfo.platforms, details: generalDetails?.details },
+			{ id: 'videos', title: 'Tráilers y videos', videos: pageInfo.videos },
+			{ id: 'gallery', title: 'Capturas de pantalla / Galería', gallery: pageInfo.gallery },
+			{ id: 'features', title: 'Características / Features', paragraphs: newFeatures?.paragraphs || [], features: pageInfo.features },
+			{ id: 'lore', title: 'Historia / Lore', paragraphs: pageInfo.lore },
+			{ id: 'characters', title: 'Personajes', characters: pageInfo.characters },
+			{ id: 'expectations', title: 'Expectativas', paragraphs: expectations?.paragraphs || [] },
+			{ id: 'verdict', title: 'Veredicto final', paragraphs: verdict?.paragraphs || [], final: true }
+		];
+
+		sectionsContainer.replaceChildren();
+		pageSections.forEach((content, index) => {
+			const section = document.createElement('section');
+			section.id = content.id;
+			section.className = index === 0 ? 'scroll-mt-20' : content.final ? 'scroll-mt-20 border-t-4 border-brandGreen pt-6 pb-2' : 'scroll-mt-20 border-t border-gray-200 pt-8';
+			const heading = document.createElement('h2');
+			heading.className = 'text-xl sm:text-2xl font-bold text-gray-900 mb-3';
+			heading.textContent = content.title;
+			section.appendChild(heading);
+			(content.paragraphs || []).forEach(text => {
+				const paragraph = document.createElement('p');
+				paragraph.className = 'text-gray-700 leading-relaxed mb-4';
+				paragraph.textContent = text;
+				section.appendChild(paragraph);
+			});
+
+			if (content.gameplayModes) {
+				const modes = document.createElement('p');
+				modes.className = 'mt-4 text-sm text-gray-700';
+				const label = document.createElement('strong');
+				label.textContent = 'Modos de juego: ';
+				modes.append(label, document.createTextNode(content.gameplayModes));
+				section.appendChild(modes);
+			}
+
+			if (content.note) {
+				const note = document.createElement('p');
+				note.className = 'text-sm text-gray-600 mb-4';
+				note.textContent = content.note;
+				section.appendChild(note);
+			}
+
+			if (content.requirements) {
+				const requirementGrid = document.createElement('div');
+				requirementGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+				content.requirements.forEach(group => {
+					const card = document.createElement('div');
+					card.className = 'border border-gray-200 rounded-md p-4';
+					const title = document.createElement('h3');
+					title.className = 'font-bold text-gray-900 mb-3';
+					title.textContent = group.title;
+					const list = document.createElement('dl');
+					list.className = 'space-y-2 text-sm';
+					group.rows.forEach(([label, value]) => {
+						const row = document.createElement('div');
+						row.className = 'flex justify-between gap-4 border-t border-gray-100 pt-2';
+						const term = document.createElement('dt');
+						term.className = 'font-semibold text-gray-700';
+						term.textContent = label;
+						const description = document.createElement('dd');
+						description.className = 'text-gray-600 text-right';
+						description.textContent = value;
+						row.append(term, description);
+						list.appendChild(row);
+					});
+					card.append(title, list);
+					requirementGrid.appendChild(card);
+				});
+				section.appendChild(requirementGrid);
+			}
+
+			if (content.platforms) {
+				const platformList = document.createElement('ul');
+				platformList.className = 'divide-y divide-gray-200';
+				content.platforms.forEach(([platform, date]) => {
+					const row = document.createElement('li');
+					row.className = 'flex flex-col sm:flex-row sm:justify-between gap-1 py-3 text-sm';
+					const platformName = document.createElement('strong');
+					platformName.className = 'text-gray-900';
+					platformName.textContent = platform;
+					const releaseDate = document.createElement('span');
+					releaseDate.className = 'text-gray-600';
+					releaseDate.textContent = date;
+					row.append(platformName, releaseDate);
+					platformList.appendChild(row);
+				});
+				section.appendChild(platformList);
+			}
+
+			if (content.details?.length) {
+				const details = document.createElement('dl');
+				details.className = 'grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5 text-sm';
+				content.details.forEach(([label, value]) => {
+					const wrapper = document.createElement('div');
+					const term = document.createElement('dt');
+					const description = document.createElement('dd');
+					term.className = 'font-bold text-gray-900';
+					term.textContent = label;
+					description.className = 'mt-1 text-gray-700';
+					description.textContent = value;
+					wrapper.append(term, description);
+					details.appendChild(wrapper);
+				});
+				section.appendChild(details);
+			}
+
+			if (content.videos) {
+				if (!content.videos.length) {
+					const unavailable = document.createElement('p');
+					unavailable.className = 'text-sm text-gray-600';
+					unavailable.textContent = 'No hay tráiler o video disponible en los archivos de esta noticia.';
+					section.appendChild(unavailable);
+				}
+				content.videos.forEach(videoInfo => {
+					const videoFrame = document.createElement('figure');
+					videoFrame.className = 'overflow-hidden rounded-md bg-black';
+					const video = document.createElement('video');
+					video.className = 'w-full aspect-video object-contain';
+					video.controls = true;
+					video.muted = true;
+					video.playsInline = true;
+					video.preload = 'metadata';
+					const source = document.createElement('source');
+					source.src = videoInfo.src;
+					source.type = 'video/mp4';
+					video.appendChild(source);
+					const caption = document.createElement('figcaption');
+					caption.className = 'px-3 py-2 text-xs text-gray-300';
+					caption.textContent = videoInfo.title;
+					videoFrame.append(video, caption);
+					section.appendChild(videoFrame);
+				});
+			}
+
+			if (content.gallery) {
+				const galleryItems = content.gallery.length ? content.gallery : [{ src: article.image, alt: article.imageAlt }];
+				const gallery = document.createElement('div');
+				gallery.className = 'grid grid-cols-1 sm:grid-cols-2 gap-4';
+				galleryItems.forEach(item => {
+					const figure = document.createElement('figure');
+					figure.className = 'overflow-hidden rounded-md bg-gray-100';
+					const image = document.createElement('img');
+					image.src = item.src;
+					image.alt = item.alt;
+					image.loading = 'lazy';
+					image.className = 'w-full aspect-video object-cover';
+					figure.appendChild(image);
+					if (item.caption) {
+						const caption = document.createElement('figcaption');
+						caption.className = 'px-3 py-2 text-xs text-gray-600';
+						caption.textContent = item.caption;
+						figure.appendChild(caption);
+					}
+					gallery.appendChild(figure);
+				});
+				section.appendChild(gallery);
+			}
+
+			if (content.features) {
+				const featureGrid = document.createElement('div');
+				featureGrid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4';
+				content.features.forEach(feature => {
+					const item = document.createElement('article');
+					item.className = 'border border-gray-200 rounded-md p-4';
+					const icon = document.createElement('i');
+					icon.className = `fas ${feature.icon} text-brandGreen text-lg mb-3`;
+					icon.setAttribute('aria-hidden', 'true');
+					const title = document.createElement('h3');
+					title.className = 'font-bold text-gray-900';
+					title.textContent = feature.title;
+					const text = document.createElement('p');
+					text.className = 'mt-2 text-sm text-gray-700 leading-relaxed';
+					text.textContent = feature.text;
+					item.append(icon, title, text);
+					featureGrid.appendChild(item);
+				});
+				section.appendChild(featureGrid);
+			}
+
+			if (content.characters) {
+				const characterGrid = document.createElement('div');
+				characterGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+				content.characters.forEach(character => {
+					const item = document.createElement('article');
+					item.className = 'flex gap-4 border border-gray-200 rounded-md overflow-hidden';
+					if (character.image) {
+						const portrait = document.createElement('img');
+						portrait.src = character.image;
+						portrait.alt = character.imageAlt || `Artwork de ${character.name}`;
+						portrait.loading = 'lazy';
+						portrait.className = 'w-24 sm:w-32 min-h-32 object-cover';
+						item.appendChild(portrait);
+					}
+					const copy = document.createElement('div');
+					copy.className = 'py-4 pr-4';
+					const role = document.createElement('p');
+					role.className = 'text-xs font-bold uppercase text-brandGreen';
+					role.textContent = character.role;
+					const name = document.createElement('h3');
+					name.className = 'mt-1 font-bold text-gray-900';
+					name.textContent = character.name;
+					const description = document.createElement('p');
+					description.className = 'mt-2 text-sm text-gray-700 leading-relaxed';
+					description.textContent = character.text;
+					copy.append(role, name, description);
+					item.appendChild(copy);
+					characterGrid.appendChild(item);
+				});
+				section.appendChild(characterGrid);
+			}
+
+			sectionsContainer.appendChild(section);
+		});
+
+		let isSearchOpen = false;
+		function toggleInlineSearch() {
+			const searchBox = document.getElementById('inline-search-box');
+			const searchInput = document.getElementById('inline-search-input');
+			const textLabel = document.getElementById('search-text-label');
+			isSearchOpen = !isSearchOpen;
+			if (isSearchOpen) {
+				searchBox.classList.add('open');
+				if (textLabel) textLabel.classList.add('hidden');
+				setTimeout(() => searchInput.focus(), 350);
+			} else {
+				searchBox.classList.remove('open');
+				if (textLabel) textLabel.classList.remove('hidden');
+				searchInput.value = '';
+			}
+		}
+		function toggleMobileMenu() {
+			document.getElementById('mobile-menu').classList.toggle('hidden');
+		}
+	</script>
+</body>
+</html>

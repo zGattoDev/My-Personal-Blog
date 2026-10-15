@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#0a8754">
+	<title>Contacto | El Blog Del Chino</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="el_blog_del_chino.css">
+	<script src="color-mode.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		html.dark-mode #contact-form input {
+			background-color: #fff !important;
+			color: #18241e !important;
+			caret-color: #0a8754;
+		}
+
+		html.dark-mode #contact-form input::placeholder {
+			color: #68746c !important;
+		}
+	</style>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						brandGreen: '#0a8754',
+						brandDarkGreen: '#07633d',
+						brandLightGreen: '#10b981',
+						brandDark: '#121212',
+						sidebarBg: '#1e1e1e'
+					},
+					fontFamily: { sans: ['Inter', 'sans-serif'] }
+				}
+			}
+		};
+	</script>
+</head>
+<body class="min-h-screen flex flex-col">
+	<header class="bg-white border-b border-gray-200">
+		<div class="logo-container border-b border-gray-100">
+			<a href="el_blog_del_chino.html#inicio" class="inline-block text-center group">
+				<div class="header-logo-img flex flex-col items-center justify-center p-2">
+					<h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-gray-900 leading-none mb-1">El Blog<br><span class="text-gray-900">Del Chino</span></h1>
+				</div>
+			</a>
+		</div>
+		<nav class="bg-brandGreen text-white shadow-md sticky top-0 z-40">
+			<div class="max-w-5xl mx-auto px-4 sm:px-6">
+				<div class="flex items-center h-14">
+					<div class="flex items-center">
+						<button id="search-trigger-btn" onclick="toggleInlineSearch()" class="p-2 rounded-lg hover:bg-brandDarkGreen transition-colors flex items-center gap-2 focus:outline-none" title="Buscar"><i class="fas fa-search text-lg"></i><span id="search-text-label" class="hidden sm:inline text-sm font-medium">Buscar</span></button>
+						<div id="inline-search-box" class="search-expand-container">
+							<div class="relative flex items-center ml-2">
+								<input type="text" id="inline-search-input" placeholder="Buscar noticia o tema..." class="py-1.5 pl-3 pr-8 rounded-full bg-emerald-950/70 text-white placeholder-emerald-200/70 border border-emerald-400/40 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-white w-full shadow-inner">
+								<button onclick="toggleInlineSearch()" class="absolute right-2 text-emerald-200 hover:text-white text-xs p-1 focus:outline-none" title="Cerrar búsqueda"><i class="fas fa-times"></i></button>
+							</div>
+						</div>
+					</div>
+					<div class="hidden md:flex items-center space-x-6 font-medium text-sm lg:text-base md:ml-auto">
+						<a href="el_blog_del_chino.html#inicio" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Inicio</a>
+						<a href="el_blog_del_chino.html#noticias" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Noticias</a>
+						<a href="el_blog_del_chino.html#reviews" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Reviews</a>
+						<a href="el_blog_del_chino.html#videojuegos" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Videojuegos</a>
+						<a href="musica_blog.html" class="hover:bg-brandDarkGreen px-4 py-4 rounded transition-colors">Musica</a>
+						<a href="contactos_blog.html" aria-current="page" class="bg-brandDarkGreen px-4 py-4 rounded transition-colors">Contacto</a>
+					</div>
+					<div class="ml-auto md:ml-3 flex items-center gap-1">
+						<button id="color-mode-toggle" onclick="toggleColorMode()" class="p-2 rounded hover:bg-brandDarkGreen transition-colors focus:outline-none" aria-label="Cambiar a modo oscuro" title="Cambiar a modo oscuro" aria-pressed="false"><i class="fas fa-moon" aria-hidden="true"></i></button>
+						<button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded hover:bg-brandDarkGreen text-xl focus:outline-none" title="Abrir menú" aria-label="Abrir menú"><i class="fas fa-bars"></i></button>
+					</div>
+				</div>
+			</div>
+			<div id="mobile-menu" class="hidden md:hidden bg-brandDarkGreen border-t border-emerald-700 px-4 py-3 space-y-2 text-sm font-medium">
+				<a href="el_blog_del_chino.html#inicio" class="block py-1 hover:text-emerald-200">Inicio</a>
+				<a href="el_blog_del_chino.html#noticias" class="block py-1 hover:text-emerald-200">Noticias</a>
+				<a href="el_blog_del_chino.html#reviews" class="block py-1 hover:text-emerald-200">Reviews</a>
+				<a href="el_blog_del_chino.html#videojuegos" class="block py-1 hover:text-emerald-200">Videojuegos</a>
+				<a href="musica_blog.html" class="block py-1 hover:text-emerald-200">Musica</a>
+				<a href="contactos_blog.html" aria-current="page" class="block py-1 text-emerald-200">Contacto</a>
+			</div>
+		</nav>
+	</header>
+
+	<main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14 flex-grow w-full">
+		<div class="max-w-3xl mb-9 sm:mb-12">
+			<p class="text-sm font-bold uppercase text-brandGreen mb-3">Hablemos</p>
+			<h2 class="text-3xl sm:text-4xl font-black text-gray-900 leading-tight">Contacto y equipo</h2>
+			<p class="mt-3 text-gray-600 leading-relaxed">Escríbenos para colaborar con El Blog Del Chino.</p>
+		</div>
+
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+			<section aria-labelledby="profile-title" class="max-w-xl">
+				<div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
+					<img src="contactosimg/fotoperfil.jpg" alt="Foto de referencia del autor; reemplazar por una foto personal" class="w-full max-w-[240px] aspect-[4/5] object-cover rounded-lg bg-gray-200">
+					<div class="pt-1">
+						<p class="text-xs font-bold uppercase tracking-wider text-brandGreen">Autor</p>
+						<h3 id="profile-title" class="mt-2 text-2xl font-extrabold text-gray-900">Ruben Eduardo Ortiz Gordillo</h3>
+						<p class="mt-1 text-sm font-semibold text-brandGreen">Software Engineer &amp; Developer</p>
+						<p class="mt-2 text-sm text-gray-600 leading-relaxed">Creador de El Blog Del Chino. Puedes contactarme por correo, teléfono o redes sociales.</p>
+						<dl class="mt-6 space-y-4 text-sm">
+							<div>
+								<dt class="text-xs font-semibold uppercase text-gray-500">Teléfono</dt>
+								<dd class="mt-1"><a href="tel:+51936692162" class="font-semibold text-gray-900 hover:text-brandGreen">936 692 162</a></dd>
+							</div>
+							<div>
+								<dt class="text-xs font-semibold uppercase text-gray-500">Correo</dt>
+								<dd class="mt-1 break-all"><a href="mailto:srgatomctaco@gmail.com" class="font-semibold text-gray-900 hover:text-brandGreen">srgatomctaco@gmail.com</a></dd>
+							</div>
+						</dl>
+					</div>
+				</div>
+				<div class="mt-8 border-t border-gray-200 pt-5">
+					<h4 class="text-sm font-bold uppercase tracking-wide text-gray-800">Redes sociales</h4>
+					<div class="mt-4 flex flex-wrap gap-3">
+						<a href="https://github.com/zGattoDev" target="_blank" rel="noopener noreferrer" aria-label="GitHub: zGattoDev" title="GitHub: zGattoDev" class="w-11 h-11 rounded-full bg-gray-100 text-gray-800 hover:bg-brandGreen hover:text-white flex items-center justify-center transition-colors"><i class="fab fa-github"></i></a>
+						<a href="https://x.com/SrGatoMcTaco" target="_blank" rel="noopener noreferrer" aria-label="X" title="X" class="w-11 h-11 rounded-full bg-gray-100 text-gray-800 hover:bg-brandGreen hover:text-white flex items-center justify-center transition-colors"><i class="fab fa-twitter"></i></a>
+						<a href="https://www.youtube.com/@eduardo81896" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube" class="w-11 h-11 rounded-full bg-gray-100 text-gray-800 hover:bg-brandGreen hover:text-white flex items-center justify-center transition-colors"><i class="fab fa-youtube"></i></a>
+						<a href="https://discord.gg/S75GKHeaC" target="_blank" rel="noopener noreferrer" aria-label="Discord" title="Discord" class="w-11 h-11 rounded-full bg-gray-100 text-gray-800 hover:bg-brandGreen hover:text-white flex items-center justify-center transition-colors"><i class="fab fa-discord"></i></a>
+						<a href="https://www.instagram.com/siirgatto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="w-11 h-11 rounded-full bg-gray-100 text-gray-800 hover:bg-brandGreen hover:text-white flex items-center justify-center transition-colors"><i class="fab fa-instagram"></i></a>
+					</div>
+					<p class="mt-3 text-xs text-gray-500"></p>
+				</div>
+			</section>
+
+			<section aria-labelledby="team-title" class="border-t-4 border-brandGreen bg-white p-5 sm:p-8 shadow-sm">
+				<p class="text-xs font-bold uppercase tracking-wider text-brandGreen">Colabora con nosotros</p>
+				<h3 id="team-title" class="mt-2 text-2xl font-extrabold text-gray-900">¿Quieres ser parte de nuestro equipo?</h3>
+				<p class="mt-2 mb-6 text-sm text-gray-600 leading-relaxed">Déjanos tus datos y prepara un correo para que podamos conversar sobre tu propuesta.</p>
+				<form id="contact-form" class="space-y-4">
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<div>
+							<label for="first-name" class="block mb-1.5 text-sm font-semibold text-gray-800">Nombre</label>
+							<input id="first-name" name="nombre" type="text" autocomplete="given-name" required class="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-brandGreen focus:outline-none focus:ring-2 focus:ring-brandGreen/20">
+						</div>
+						<div>
+							<label for="last-name" class="block mb-1.5 text-sm font-semibold text-gray-800">Apellido</label>
+							<input id="last-name" name="apellido" type="text" autocomplete="family-name" required class="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-brandGreen focus:outline-none focus:ring-2 focus:ring-brandGreen/20">
+						</div>
+					</div>
+					<div>
+						<label for="contact-email" class="block mb-1.5 text-sm font-semibold text-gray-800">Correo electrónico</label>
+						<input id="contact-email" name="correo" type="email" autocomplete="email" required class="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-brandGreen focus:outline-none focus:ring-2 focus:ring-brandGreen/20">
+					</div>
+					<div>
+						<label for="contact-phone" class="block mb-1.5 text-sm font-semibold text-gray-800">Número de teléfono</label>
+						<input id="contact-phone" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required class="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-brandGreen focus:outline-none focus:ring-2 focus:ring-brandGreen/20">
+					</div>
+					<button type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-md bg-brandGreen px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brandDarkGreen focus:outline-none focus:ring-2 focus:ring-brandGreen focus:ring-offset-2"><i class="fas fa-envelope" aria-hidden="true"></i>Contáctanos</button>
+					<p id="form-status" class="min-h-5 text-xs text-gray-500" aria-live="polite">Al enviar, se abrirá tu aplicación de correo con los datos preparados.</p>
+				</form>
+			</section>
+		</div>
+	</main>
+
+	<footer class="bg-brandDark text-gray-300 border-t-4 border-brandGreen mt-12 py-7">
+		<div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between gap-2 text-xs">
+			<p>Ruben Eduardo Ortiz - El Blog Del Chino</p>
+			<a href="el_blog_del_chino.html#inicio" class="hover:text-emerald-400">Volver al inicio</a>
+		</div>
+	</footer>
+
+	<script>
+		let isSearchOpen = false;
+		function toggleInlineSearch() {
+			const searchBox = document.getElementById('inline-search-box');
+			const searchInput = document.getElementById('inline-search-input');
+			const textLabel = document.getElementById('search-text-label');
+			isSearchOpen = !isSearchOpen;
+			searchBox.classList.toggle('open', isSearchOpen);
+			textLabel.classList.toggle('hidden', isSearchOpen);
+			if (isSearchOpen) setTimeout(() => searchInput.focus(), 350);
+			else searchInput.value = '';
+		}
+		function toggleMobileMenu() {
+			document.getElementById('mobile-menu').classList.toggle('hidden');
+		}
+		document.getElementById('contact-form').addEventListener('submit', event => {
+			event.preventDefault();
+			const formData = new FormData(event.currentTarget);
+			const subject = encodeURIComponent('Contacto para colaborar con El Blog Del Chino');
+			const body = encodeURIComponent(`Nombre: ${formData.get('nombre')} ${formData.get('apellido')}\nCorreo: ${formData.get('correo')}\nTeléfono: ${formData.get('telefono')}`);
+			document.getElementById('form-status').textContent = 'Se abrirá tu aplicación de correo con los datos preparados.';
+			window.location.href = `mailto:srgatomctaco@gmail.com?subject=${subject}&body=${body}`;
+		});
+	</script>
+</body>
+</html>
